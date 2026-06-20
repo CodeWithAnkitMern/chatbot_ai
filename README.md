@@ -85,3 +85,51 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 ```bash
 git clone https://github.com/CodeWithAnkitMern/chatbot_ai.git
 cd chatbot_ai
+
+Step 2: Create Virtual Environment
+bash
+python -m venv venv
+Windows:
+
+bash
+venv\Scripts\activate
+Mac/Linux:
+
+bash
+source venv/bin/activate
+
+Step 3: Install Dependencies
+bash
+pip install -r requirements.txt
+Step 4: Set Up Environment Variables
+Create a .env file in the root directory:
+
+env
+GROQ_API_KEY=your_groq_api_key_here
+
+
+Step 5: Run the Application
+bash
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+
+Step 6: Open in Browser
+text
+http://127.0.0.1:8000
+
+
+
+chatbot_ai/
+├── app/
+│   ├── templates/
+│   │   └── chat.html          # Chat interface
+│   └── static/
+│       ├── style.css          # All styles + dark mode
+│       └── script.js          # All features + dual-mode logic
+├── main.py                    # FastAPI server
+├── database.py                # SQLite database functions
+├── requirements.txt           # Dependencies
+├── Procfile                   # Render start command
+├── render.yaml                # Render configuration
+├── .env                       # Environment variables (not in git)
+├── .gitignore                 # Git ignore file
+└── README.md                  # This file
