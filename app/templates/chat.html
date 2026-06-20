@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 AI ChatBot</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="avatar" id="modeAvatar">
+                    🤖
+                    <span class="status-dot"></span>
+                </div>
+                <div class="header-info">
+                    <div class="header-name" id="modeTitle">AI ChatBot</div>
+                    <div class="header-status" id="modeStatus">
+                        <span>●</span> <span id="statusText">Online</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <!-- Mode Toggle Button -->
+                <button class="header-btn" id="modeToggle" title="Switch Mode">👥</button>
+                <button class="header-btn" id="themeToggle" title="Toggle Dark Mode">🌙</button>
+                <button class="header-btn" id="clearChat" title="Clear Chat">🗑️</button>
+            </div>
+        </div>
+
+        <!-- Online Users Sidebar (Group Mode) -->
+        <div class="users-sidebar" id="usersSidebar">
+            <div class="users-header">
+                <span>👥 Online Users</span>
+                <button class="close-users" id="closeUsers">✕</button>
+            </div>
+            <div class="users-list" id="usersList">
+                <!-- Users will be added here -->
+            </div>
+        </div>
+
+        <!-- Chat messages area -->
+        <div class="chat-messages" id="chatMessages">
+            <div class="message received">
+                <div class="message-content">
+                    🤖 Welcome to AI ChatBot!
+                    <br><br>
+                    💡 <strong>Commands:</strong><br>
+                    /help - Show commands<br>
+                    /joke - Tell a joke<br>
+                    /time - Show time<br>
+                    /clear - Clear chat<br>
+                    /group - Join group chat<br>
+                    /bot - Return to bot mode
+                    <br><br>
+                    🔄 Click the <strong>👥</strong> button to switch to Group Chat!
+                </div>
+                <div class="message-time">Just now</div>
+            </div>
+        </div>
+
+        <!-- Input area -->
+        <div class="chat-input">
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="Type a message..." autocomplete="off">
+                <div class="input-actions">
+                    <button class="input-btn" id="emojiBtn" title="Pick an emoji">😊</button>
+                    <button class="input-btn" id="usersBtn" title="Online Users" style="display:none;">👥</button>
+                    <button id="sendButton" class="send-btn">
+                        <span>➤</span>
+                    </button>
+                </div>
+            </div>
+            <div id="emojiPicker" class="emoji-picker" style="display: none;">
+                <div class="emoji-search">
+                    <input type="text" id="emojiSearch" placeholder="Search emojis...">
+                </div>
+                <div class="emoji-grid" id="emojiGrid"></div>
+                <div class="emoji-categories">
+                    <button class="emoji-cat active" data-cat="smileys">😊</button>
+                    <button class="emoji-cat" data-cat="nature">🌿</button>
+                    <button class="emoji-cat" data-cat="food">🍕</button>
+                    <button class="emoji-cat" data-cat="activities">⚽</button>
+                    <button class="emoji-cat" data-cat="travel">✈️</button>
+                    <button class="emoji-cat" data-cat="objects">💡</button>
+                    <button class="emoji-cat" data-cat="symbols">❤️</button>
+                    <button class="emoji-cat" data-cat="flags">🏳️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Username Modal for Group Chat -->
+    <div class="modal" id="usernameModal" style="display:none;">
+        <div class="modal-content">
+            <h2>👥 Join Group Chat</h2>
+            <p>Enter your username to join the group:</p>
+            <input type="text" id="usernameInput" placeholder="Enter username..." autofocus>
+            <button id="joinButton" class="send-btn" style="width:100%; margin-top:10px; border-radius:10px; padding:12px;">
+                Join Group 🚀
+            </button>
+            <button id="cancelJoin" class="input-btn" style="margin-top:8px; width:100%; border-radius:10px; padding:8px;">
+                Cancel
+            </button>
+            <p style="margin-top:10px; font-size:12px; color:#888;">
+                💡 Tips: Use @bot or /ai to talk to AI in group
+            </p>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
