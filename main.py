@@ -1,17 +1,16 @@
 from fastapi import FastAPI, Request, Form, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse, JSONResponse, StreamingResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 import uvicorn
 import os
 from datetime import datetime
 import random
 import json
-import asyncio
 from database import init_database, save_message, get_chat_history, clear_history, get_message_count
 from dotenv import load_dotenv
 from groq import Groq
 
-# Load environment variables
+# Load environment variables from .env file
 load_dotenv()
 
 # Initialize database
@@ -35,7 +34,7 @@ else:
 active_connections = {}
 user_colors = [
     '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7',
-    '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9',
+    '#DDA0DD', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E9'
 ]
 
 # Response cache for common questions
@@ -117,12 +116,10 @@ async def websocket_endpoint(websocket: WebSocket, username: str):
             
             save_message(username, message_text)
             
-            # Handle commands
             if message_text.startswith("/"):
                 await handle_command(websocket, username, message_text)
                 continue
             
-            # Check for AI mention
             if "@bot" in message_text.lower() or "/ai" in message_text.lower():
                 clean_message = message_text.replace("@bot", "").replace("/ai", "").strip()
                 if clean_message:
@@ -138,7 +135,6 @@ async def websocket_endpoint(websocket: WebSocket, username: str):
                     await websocket.send_text(json.dumps(help_msg))
                 continue
             
-            # Regular message
             chat_message = {
                 "type": "chat",
                 "username": username,
@@ -265,9 +261,7 @@ async def handle_command(websocket: WebSocket, username: str, command: str):
             await websocket.send_text(json.dumps(response))
 
 async def generate_ai_response_stream(websocket: WebSocket, username: str, message: str):
-    """Generate AI response with streaming-like effect"""
     try:
-        # Check cache first
         cache_key = message.lower().strip()
         if cache_key in response_cache:
             cached_response = response_cache[cache_key]
@@ -284,7 +278,6 @@ async def generate_ai_response_stream(websocket: WebSocket, username: str, messa
         if client:
             print(f"🤖 AI Request from {username}: {message}")
             
-            # Use streaming for faster first response
             stream = client.chat.completions.create(
                 model="openai/gpt-oss-120b",
                 messages=[
@@ -296,7 +289,6 @@ async def generate_ai_response_stream(websocket: WebSocket, username: str, messa
                 stream=True,
             )
             
-            # Collect response chunks
             full_response = ""
             for chunk in stream:
                 if chunk.choices[0].delta.content:
@@ -305,9 +297,7 @@ async def generate_ai_response_stream(websocket: WebSocket, username: str, messa
             if not full_response:
                 full_response = "I'm not sure how to respond to that. Could you rephrase?"
             
-            # Cache the response
             response_cache[cache_key] = full_response
-            # Limit cache size
             if len(response_cache) > 100:
                 oldest_key = next(iter(response_cache))
                 del response_cache[oldest_key]
@@ -338,11 +328,9 @@ async def generate_ai_response_stream(websocket: WebSocket, username: str, messa
 
 @app.post("/send-message")
 async def send_message(message: str = Form(...)):
-    """HTTP endpoint for bot mode with caching and faster responses"""
     save_message("user", message)
     
     try:
-        # Check cache first
         cache_key = message.lower().strip()
         if cache_key in response_cache:
             response_text = response_cache[cache_key]
@@ -352,7 +340,6 @@ async def send_message(message: str = Form(...)):
         if client:
             print(f"🤖 Bot Request: {message}")
             
-            # Use streaming for faster first response
             stream = client.chat.completions.create(
                 model="openai/gpt-oss-120b",
                 messages=[
@@ -364,7 +351,6 @@ async def send_message(message: str = Form(...)):
                 stream=True,
             )
             
-            # Collect response chunks
             response_text = ""
             for chunk in stream:
                 if chunk.choices[0].delta.content:
@@ -373,7 +359,6 @@ async def send_message(message: str = Form(...)):
             if not response_text:
                 response_text = get_fallback_response(message)
             
-            # Cache the response
             response_cache[cache_key] = response_text
             if len(response_cache) > 100:
                 oldest_key = next(iter(response_cache))
@@ -391,17 +376,14 @@ async def send_message(message: str = Form(...)):
     return {"response": response_text}
 
 def get_fallback_response(message: str) -> str:
-    """Enhanced fallback responses"""
     msg_lower = message.lower().strip()
     
     if msg_lower == "":
         return "Please type something! 😊"
     
-    # Check for greetings
     if any(word in msg_lower for word in ["hello", "hi", "hey", "sup", "yo"]):
         return random.choice(fallback_responses["greetings"])
     
-    # Check for how are you
     if any(word in msg_lower for word in ["how are you", "how r u"]):
         responses = [
             "I'm doing great, thanks for asking! 😊 How about you?",
@@ -410,25 +392,20 @@ def get_fallback_response(message: str) -> str:
         ]
         return random.choice(responses)
     
-    # Check for jokes
     if any(word in msg_lower for word in ["joke", "funny", "laugh"]):
         return random.choice(fallback_responses["jokes"])
     
-    # Check for time
     if any(word in msg_lower for word in ["time", "clock"]):
         now = datetime.now()
         return f"⏰ It's {now.strftime('%I:%M %p')} on {now.strftime('%B %d, %Y')}"
     
-    # Check for date
     if any(word in msg_lower for word in ["date", "today"]):
         now = datetime.now()
         return f"📅 Today is {now.strftime('%B %d, %Y')}"
     
-    # Check for goodbye
     if any(word in msg_lower for word in ["bye", "goodbye", "see you"]):
         return "Goodbye! 👋 Come back anytime! 🚀"
     
-    # Check for thanks
     if any(word in msg_lower for word in ["thanks", "thank you", "thx"]):
         return random.choice([
             "You're welcome! 🌟 Happy to help!",
@@ -436,11 +413,9 @@ def get_fallback_response(message: str) -> str:
             "My pleasure! 💫"
         ])
     
-    # Check for compliments
     if any(word in msg_lower for word in ["love", "awesome", "cool", "great"]):
         return random.choice(fallback_responses["compliments"])
     
-    # Check for help
     if any(word in msg_lower for word in ["help", "what can you do", "features"]):
         return """🤖 I'm an AI-powered chatbot! I can:
 • Chat about anything
@@ -451,11 +426,9 @@ def get_fallback_response(message: str) -> str:
 • Remember our conversation!
 Just type and ask!"""
     
-    # Check for weather
     if any(word in msg_lower for word in ["weather", "rain", "sunny"]):
         return "☀️ I don't have weather data yet, but I hope it's beautiful wherever you are!"
     
-    # General responses
     general_responses = [
         f"Interesting! 🤔 Tell me more about '{message}'!",
         f"I see you said '{message}'. That's cool! 😊",
@@ -468,11 +441,9 @@ Just type and ask!"""
 @app.post("/clear-history")
 async def clear_chat_history():
     clear_history()
-    # Clear cache when history is cleared
     response_cache.clear()
     return {"status": "success"}
 
 if __name__ == "__main__":
-    import os
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)

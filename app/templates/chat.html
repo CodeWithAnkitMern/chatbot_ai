@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>💬 AI ChatBot</title>
+    <title>💬 Ankit ChatBot</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
@@ -24,38 +24,31 @@
                 </div>
             </div>
             <div class="header-actions">
-                <!-- Mode Toggle Button -->
                 <button class="header-btn" id="modeToggle" title="Switch Mode">👥</button>
                 <button class="header-btn" id="themeToggle" title="Toggle Dark Mode">🌙</button>
                 <button class="header-btn" id="clearChat" title="Clear Chat">🗑️</button>
             </div>
         </div>
 
-        <!-- Online Users Sidebar (Group Mode) -->
+        <!-- Online Users Sidebar -->
         <div class="users-sidebar" id="usersSidebar">
             <div class="users-header">
                 <span>👥 Online Users</span>
                 <button class="close-users" id="closeUsers">✕</button>
             </div>
-            <div class="users-list" id="usersList">
-                <!-- Users will be added here -->
-            </div>
+            <div class="users-list" id="usersList"></div>
         </div>
 
         <!-- Chat messages area -->
         <div class="chat-messages" id="chatMessages">
             <div class="message received">
                 <div class="message-content">
-                    🤖 Welcome to AI ChatBot!
-                    <br><br>
+                    👋 <strong>Welcome to AI ChatBot!</strong><br><br>
                     💡 <strong>Commands:</strong><br>
                     /help - Show commands<br>
                     /joke - Tell a joke<br>
                     /time - Show time<br>
-                    /clear - Clear chat<br>
-                    /group - Join group chat<br>
-                    /bot - Return to bot mode
-                    <br><br>
+                    /clear - Clear chat<br><br>
                     🔄 Click the <strong>👥</strong> button to switch to Group Chat!
                 </div>
                 <div class="message-time">Just now</div>
@@ -93,7 +86,7 @@
         </div>
     </div>
 
-    <!-- Username Modal for Group Chat -->
+    <!-- Username Modal -->
     <div class="modal" id="usernameModal" style="display:none;">
         <div class="modal-content">
             <h2>👥 Join Group Chat</h2>

@@ -16,13 +16,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Track states
     let isTyping = false;
     let messageCount = 0;
-    let currentMode = 'bot'; // 'bot' or 'group'
+    let currentMode = 'bot';
     let ws = null;
     let username = '';
     let isConnected = false;
 
     // ============================================================
-    // SECTION 1: EMOJI PICKER DATA & FUNCTIONS
+    // SECTION 1: EMOJI PICKER DATA
     // ============================================================
 
     const emojiData = {
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // ============================================================
-    // SECTION 3: TYPING INDICATOR FUNCTIONS
+    // SECTION 3: TYPING INDICATOR
     // ============================================================
 
     function showTypingIndicator() {
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
         typingDiv.className = 'message received typing-indicator';
         typingDiv.id = 'typingIndicator';
         typingDiv.innerHTML = `
-            <div class="message-content" style="background: #ffffff; padding: 10px 16px;">
+            <div class="message-content" style="background: #ffffff; padding: 8px 14px;">
                 <div class="dots">
                     <span></span>
                     <span></span>
@@ -190,7 +190,6 @@ document.addEventListener('DOMContentLoaded', function () {
             timeDiv.textContent = `${hours}:${minutes}`;
         }
 
-        // Add delete button for sent messages
         if (type === 'sent') {
             const deleteBtn = document.createElement('button');
             deleteBtn.className = 'delete-btn';
@@ -213,7 +212,6 @@ document.addEventListener('DOMContentLoaded', function () {
             contentDiv.appendChild(deleteBtn);
         }
 
-        // Add reaction buttons for received messages
         if (type === 'received') {
             const reactionDiv = document.createElement('div');
             reactionDiv.className = 'message-reactions';
@@ -255,7 +253,6 @@ document.addEventListener('DOMContentLoaded', function () {
             messageDiv.appendChild(reactionDiv);
         }
 
-        // Add status for sent messages
         if (type === 'sent') {
             const statusSpan = document.createElement('span');
             statusSpan.className = 'message-status';
@@ -274,11 +271,9 @@ document.addEventListener('DOMContentLoaded', function () {
     function addSystemMessage(message) {
         const messageDiv = document.createElement('div');
         messageDiv.className = 'message system';
-
         const contentDiv = document.createElement('div');
         contentDiv.className = 'message-content';
         contentDiv.textContent = message;
-
         messageDiv.appendChild(contentDiv);
         chatMessages.appendChild(messageDiv);
         chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -485,7 +480,6 @@ document.addEventListener('DOMContentLoaded', function () {
         usersBtn.style.display = 'none';
         document.title = `(${messageCount}) 💬 AI ChatBot`;
 
-        // Close WebSocket if open
         if (ws) {
             ws.close();
             ws = null;
@@ -504,7 +498,6 @@ document.addEventListener('DOMContentLoaded', function () {
         usersBtn.style.display = 'block';
         document.title = `(${messageCount}) 💬 Group Chat`;
 
-        // Show username modal
         document.getElementById('usernameModal').style.display = 'flex';
         document.getElementById('usernameInput').focus();
     }
@@ -529,14 +522,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const timeStr = now.toLocaleTimeString();
 
         if (currentMode === 'bot') {
-            // Bot Mode
             addMessageWithFeatures(message, 'sent', timeStr);
             updateMessageCounter();
             messageInput.value = '';
             messageInput.focus();
             sendToBot(message);
         } else {
-            // Group Mode
             if (isConnected && ws && ws.readyState === WebSocket.OPEN) {
                 sendToGroup(message);
                 updateMessageCounter();
@@ -552,7 +543,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // SECTION 9: EVENT LISTENERS
     // ============================================================
 
-    // Mode Toggle
     modeToggle.addEventListener('click', function () {
         if (currentMode === 'bot') {
             switchToGroupMode();
@@ -565,7 +555,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Send message events
     sendButton.addEventListener('click', handleSendMessage);
 
     messageInput.addEventListener('keypress', function (event) {
@@ -575,7 +564,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Keyboard shortcuts
     document.addEventListener('keydown', function (e) {
         if (e.ctrlKey && e.key === 'Enter') {
             e.preventDefault();
@@ -593,7 +581,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Auto-resize input
     messageInput.addEventListener('input', function () {
         this.style.height = 'auto';
         this.style.height = Math.min(this.scrollHeight, 100) + 'px';
@@ -755,11 +742,4 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log('  - 🤖 Bot Mode: Chat with AI');
     console.log('  - 👥 Group Mode: Chat with multiple users');
     console.log('  - Click 👥 button to switch modes');
-    console.log('💡 Commands:');
-    console.log('  - /help: Show commands');
-    console.log('  - /joke: Tell a joke');
-    console.log('  - /time: Show time');
-    console.log('  - /clear: Clear chat');
-    console.log('  - /ai [message]: Ask AI in group');
-    console.log('  - @bot [message]: Ask AI in group');
 });
