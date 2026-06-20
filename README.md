@@ -1,6 +1,6 @@
 # 🤖 AI ChatBot with Group Chat
 
-A feature-rich, WhatsApp-style chatbot application with AI-powered conversations and real-time group chat capabilities.
+A feature-rich, Chatbot application with AI-powered conversations and real-time group chat capabilities.
 
 ![AI ChatBot Screenshot](https://via.placeholder.com/800x400/075e54/ffffff?text=AI+ChatBot+Demo)
 
@@ -52,18 +52,7 @@ A feature-rich, WhatsApp-style chatbot application with AI-powered conversations
 
 ## 🚀 Live Demo
 
-**[View Live Demo](https://chatbot-ai.onrender.com)**
-
-## 📸 Screenshots
-
-### Bot Mode
-![Bot Mode](https://via.placeholder.com/400x600/075e54/ffffff?text=Bot+Mode)
-
-### Group Mode
-![Group Mode](https://via.placeholder.com/400x600/075e54/ffffff?text=Group+Mode)
-
-### Dark Mode
-![Dark Mode](https://via.placeholder.com/400x600/075e54/ffffff?text=Dark+Mode)
+**[View Live Demo](https://chatbot-ai-7rxb.onrender.com)**
 
 ## 📋 Commands
 
