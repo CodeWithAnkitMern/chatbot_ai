@@ -2,7 +2,10 @@
 
 A feature-rich, Chatbot application with AI-powered conversations and real-time group chat capabilities.
 
-![AI ChatBot Screenshot](https://via.placeholder.com/800x400/075e54/ffffff?text=AI+ChatBot+Demo)
+## 🚀 Live Demo
+
+**[View Live Demo](https://chatbot-ai-7rxb.onrender.com)**
+
 
 ## ✨ Features
 
@@ -49,10 +52,6 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 | **SQLite** | Database |
 | **HTML/CSS/JS** | Frontend |
 | **Render** | Deployment |
-
-## 🚀 Live Demo
-
-**[View Live Demo](https://chatbot-ai-7rxb.onrender.com)**
 
 ## 📋 Commands
 
