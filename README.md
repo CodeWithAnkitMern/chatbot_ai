@@ -1,11 +1,29 @@
 # 🤖 AI ChatBot with Group Chat
 
-A feature-rich, Chatbot application with AI-powered conversations and real-time group chat capabilities.
+A feature-rich, WhatsApp-style chatbot application with AI-powered conversations and real-time group chat capabilities.
+
+![AI ChatBot Banner](https://via.placeholder.com/1200x400/075e54/ffffff?text=AI+ChatBot+with+Group+Chat)
 
 ## 🚀 Live Demo
 
-**[View Live Demo](https://chatbot-ai-7rxb.onrender.com)**
+**[👉 View Live Demo](https://chatbot-ai-7rxb.onrender.com)**
 
+---
+
+## 📋 Table of Contents
+- [✨ Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📸 Screenshots](#-screenshots)
+- [📋 Commands](#-commands)
+- [🏃‍♂️ Run Locally](#️-run-locally)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Deploy to Render](#-deploy-to-render)
+- [🎨 Customization](#-customization)
+- [🤝 Contributing](#-contributing)
+- [📝 License](#-license)
+- [📞 Contact](#-contact)
+
+---
 
 ## ✨ Features
 
@@ -41,6 +59,8 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 - Messages persist after refresh
 - Message counter
 
+---
+
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
@@ -52,6 +72,16 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 | **SQLite** | Database |
 | **HTML/CSS/JS** | Frontend |
 | **Render** | Deployment |
+
+---
+
+## 📸 Screenshots
+
+| Bot Mode | Group Mode | Dark Mode |
+|----------|------------|-----------|
+| ![Bot Mode](https://via.placeholder.com/200x400/075e54/ffffff?text=Bot+Mode) | ![Group Mode](https://via.placeholder.com/200x400/075e54/ffffff?text=Group+Mode) | ![Dark Mode](https://via.placeholder.com/200x400/075e54/ffffff?text=Dark+Mode) |
+
+---
 
 ## 📋 Commands
 
@@ -74,6 +104,8 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 | `@bot [message]` | Ask AI |
 | `/clear` | Clear chat |
 
+---
+
 ## 🏃‍♂️ Run Locally
 
 ### Prerequisites
@@ -85,51 +117,3 @@ A feature-rich, Chatbot application with AI-powered conversations and real-time 
 ```bash
 git clone https://github.com/CodeWithAnkitMern/chatbot_ai.git
 cd chatbot_ai
-
-Step 2: Create Virtual Environment
-bash
-python -m venv venv
-Windows:
-
-bash
-venv\Scripts\activate
-Mac/Linux:
-
-bash
-source venv/bin/activate
-
-Step 3: Install Dependencies
-bash
-pip install -r requirements.txt
-Step 4: Set Up Environment Variables
-Create a .env file in the root directory:
-
-env
-GROQ_API_KEY=your_groq_api_key_here
-
-
-Step 5: Run the Application
-bash
-uvicorn main:app --host 127.0.0.1 --port 8000 --reload
-
-Step 6: Open in Browser
-text
-http://127.0.0.1:8000
-
-
-
-chatbot_ai/
-├── app/
-│   ├── templates/
-│   │   └── chat.html          # Chat interface
-│   └── static/
-│       ├── style.css          # All styles + dark mode
-│       └── script.js          # All features + dual-mode logic
-├── main.py                    # FastAPI server
-├── database.py                # SQLite database functions
-├── requirements.txt           # Dependencies
-├── Procfile                   # Render start command
-├── render.yaml                # Render configuration
-├── .env                       # Environment variables (not in git)
-├── .gitignore                 # Git ignore file
-└── README.md                  # This file
